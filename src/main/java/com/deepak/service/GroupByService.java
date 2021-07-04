@@ -8,6 +8,6 @@ import java.util.Map;
 
 public interface GroupByService {
 
-    Map<String, List<Product>> getProducts(String groupFilter) throws Exception;
+    Map<String, List<Product>> getProducts(String groupFilter);
 
 }

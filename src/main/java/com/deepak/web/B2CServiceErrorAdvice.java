@@ -1,6 +1,6 @@
 package com.deepak.web;
 
-import com.deepak.exception.B2CException;
+import com.deepak.exception.ProductNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +17,8 @@ public class B2CServiceErrorAdvice {
         return error(INTERNAL_SERVER_ERROR, e);
     }
     
-	@ExceptionHandler({B2CException.class})
-    public ResponseEntity<String> handleNotFoundException(B2CException e) {
+	@ExceptionHandler({ProductNotFoundException.class})
+    public ResponseEntity<String> handleNotFoundException(ProductNotFoundException e) {
         return error(NOT_FOUND, e);
     }
 

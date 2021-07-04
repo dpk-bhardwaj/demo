@@ -13,12 +13,6 @@ public class BasicRdo<T> {
 
     public T data;
 
-    public BasicRdo(boolean status, String message, T data) {
-        this.status = status;
-        this.message = message;
-        this.data = data;
-    }
-
     public BasicRdo() {
 
     }
@@ -32,20 +26,6 @@ public class BasicRdo<T> {
             basicRdo.status = false;
         } else {
             basicRdo.status = true;
-            basicRdo.data = object;
-        }
-
-        return new ResponseEntity<BasicRdo>(basicRdo, reponseStatus);
-
-    }
-
-    public ResponseEntity<BasicRdo> getResponse(String message, HttpStatus reponseStatus, T object, boolean status) {
-
-        BasicRdo<T> basicRdo = new BasicRdo();
-        basicRdo.message = message;
-        basicRdo.status = status;
-
-        if (object != null) {
             basicRdo.data = object;
         }
 

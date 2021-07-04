@@ -1,5 +1,6 @@
 package com.deepak.service;
 
+import com.deepak.common.enums.GroupSpecification;
 import com.deepak.common.services.SpecificationFactory;
 import com.deepak.entity.Product;
 import com.deepak.repository.ProductRepository;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class ProductGroupByColor implements GroupByService {
 
 	static {
-		SpecificationFactory.register("color", ProductGroupByColor.class);
+		SpecificationFactory.register(GroupSpecification.COLOR.getValue(), ProductGroupByColor.class);
 	}
 
 	@Autowired

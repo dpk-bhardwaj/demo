@@ -3,10 +3,9 @@ package com.deepak.controller;
 import com.deepak.common.enums.GroupSpecification;
 import com.deepak.common.models.BasicRdo;
 import com.deepak.entity.Product;
-import com.deepak.exception.B2CException;
+import com.deepak.exception.ProductNotFoundException;
 import com.deepak.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -29,13 +28,9 @@ public class ProductController {
 	public ResponseEntity<BasicRdo> getProducts(@RequestParam(required = false) GroupSpecification filter,
 												@RequestParam(required = false) String value) throws Exception {
 		BasicRdo basicRdo = new BasicRdo();
-		Map<String, List<Product>> products;
-		if (filter != null)
-			products = productService.getProducts(filter.getValue(), value);
-		else
-			products = productService.getProducts();
+		Map<String, List<Product>> products = productService.getProducts(filter, value);
 		if(CollectionUtils.isEmpty(products))
-			throw new B2CException("Product not found!");
+			throw new ProductNotFoundException("Product not found!");
 		
 		return basicRdo.getResponse("OK",
 				HttpStatus.OK, products);

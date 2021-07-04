@@ -1,8 +1,8 @@
 package com.deepak.service;
 
+import com.deepak.common.enums.GroupSpecification;
 import com.deepak.common.services.SpecificationFactory;
 import com.deepak.entity.Product;
-import com.deepak.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -19,21 +19,15 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	ProductGroupByBrand brandService;
 
-	@Autowired
-	ProductRepository productRepository;
-
 	@Override
-	public Map<String, List<Product>> getProducts(String groupFilter, String groupByValue) throws Exception {
-		GroupByService groupByService = SpecificationFactory.getInstance(applicationContext, groupFilter);
-		if (groupByService != null) {
-			return groupByService.getProducts(groupByValue);
+	public Map<String, List<Product>> getProducts(GroupSpecification groupFilter, String groupByValue) {
+		if (groupFilter != null) {
+			GroupByService groupByService = SpecificationFactory.getInstance(applicationContext, groupFilter.getValue());
+			if (groupByService != null) {
+				return groupByService.getProducts(groupByValue);
+			}
 		}
 		return brandService.getProducts(groupByValue);
-	}
-
-	@Override
-	public Map<String, List<Product>> getProducts() {
-		return brandService.getProducts(null);
 	}
 }
 
