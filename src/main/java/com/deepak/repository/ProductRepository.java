@@ -11,11 +11,14 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	@Query("SELECT p FROM Product p WHERE p.colorId.id = :colorId")
-	List<Product> findByColorId(@Param(value = "colorId") Integer colorId);
+	@Query("SELECT p FROM Product p WHERE p.colorId.name = :colorName")
+	List<Product> findByColorName(@Param(value = "colorName") String colorName);
 
-	@Query("SELECT p FROM Product p WHERE p.brandId.id = :brandId")
-	List<Product> findByBrandId(@Param(value = "brandId") Integer brandId);
+	@Query("SELECT p FROM Product p WHERE p.brandId.name = :brandName")
+	List<Product> findByBrandName(@Param(value = "brandName") String brandName);
+
+	@Query("SELECT p FROM Product p WHERE p.catagoryId.name = :categoryName")
+	List<Product> findByProductCategoryName(@Param(value = "categoryName") String categoryName);
 	
 	List<Product> findBySize(String actualvalue);
 }
