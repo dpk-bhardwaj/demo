@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class ProductGroupByCategory implements GroupByService {
 
 	static {
-		SpecificationFactory.register("productcategory", ProductGroupByCategory.class);
+		SpecificationFactory.register("category", ProductGroupByCategory.class);
 	}
 
 	@Autowired
@@ -25,7 +25,7 @@ public class ProductGroupByCategory implements GroupByService {
 	public Map<String, List<Product>> getProducts(String groupFilter) {
 		List<Product> products;
 		if (StringUtils.hasLength(groupFilter))
-			products = productRepository.findByProductCategoryName(groupFilter);
+			products = productRepository.findByProductCategoryName(groupFilter + "%");
 		else
 			products = productRepository.findAll();
 		return products.stream().collect(Collectors.groupingBy(w -> w.getCatagoryId().getName()));

@@ -1,5 +1,7 @@
 package com.deepak.controller;
 
+import com.deepak.common.enums.GroupSpecification;
+import com.deepak.common.models.BasicRdo;
 import com.deepak.entity.Product;
 import com.deepak.exception.B2CException;
 import com.deepak.service.ProductService;
@@ -24,14 +26,19 @@ public class ProductController {
 	ProductService productService;
 
 	@GetMapping()
-	public ResponseEntity<Map<String, List<Product>>> getProducts(@RequestParam(required = false) String filter,
-                                                     			  @RequestParam(required = false) String value) throws Exception {
-		Map<String, List<Product>> products = productService.getProducts(filter, value);
+	public ResponseEntity<BasicRdo> getProducts(@RequestParam(required = false) GroupSpecification filter,
+												@RequestParam(required = false) String value) throws Exception {
+		BasicRdo basicRdo = new BasicRdo();
+		Map<String, List<Product>> products;
+		if (filter != null)
+			products = productService.getProducts(filter.getValue(), value);
+		else
+			products = productService.getProducts();
 		if(CollectionUtils.isEmpty(products))
 			throw new B2CException("Product not found!");
 		
-		return new ResponseEntity<Map<String, List<Product>>>(products,
-				new HttpHeaders(), HttpStatus.OK);
+		return basicRdo.getResponse("OK",
+				HttpStatus.OK, products);
 	}
 
 }

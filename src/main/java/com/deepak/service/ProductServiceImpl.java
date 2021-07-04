@@ -30,5 +30,10 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return brandService.getProducts(groupByValue);
 	}
+
+	@Override
+	public Map<String, List<Product>> getProducts() {
+		return brandService.getProducts(null);
+	}
 }
 

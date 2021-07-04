@@ -7,5 +7,7 @@ import java.util.Map;
 
 public interface ProductService {
 
+    Map<String, List<Product>> getProducts();
+
     Map<String, List<Product>> getProducts(String groupFilter, String groupByValue) throws Exception;
 }
